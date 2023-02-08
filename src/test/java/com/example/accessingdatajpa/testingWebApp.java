@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class testingWebApp {
 
     @Autowired
     private AddressBookRepository repo;
+    @Autowired
+    private BuddyInfoRepository buddyRepo;
 
     @Test
     public void shouldReturnAddress() throws Exception {
@@ -47,13 +50,15 @@ public class testingWebApp {
     }
 
     @Test
+    @Order(1)
     public void shouldGetOneAddressBook() throws Exception {
         AddressBook a1 = new AddressBook();
         BuddyInfo b1 = new BuddyInfo("Shashaank","613415");
         a1.addInfo(b1);
         repo.save(a1);
-        this.mockMvc.perform(get("/getoneadd?id=1")).andDo(print()).andExpect(content().string(containsString("[BuddyInfo{id=1, name=&#39;Shashaank&#39;, phone=&#39;613415&#39;}]")));
+        this.mockMvc.perform(get("/getoneadd?id=" + a1.getId())).andDo(print()).andExpect(content().string(containsString("[BuddyInfo{id=1, name=&#39;Shashaank&#39;, phone=&#39;613415&#39;}]")));
     }
+
 
     @Test
     public void getBuddys() throws Exception {
@@ -86,15 +91,16 @@ public class testingWebApp {
                 .andDo(print()).andExpect(status().isOk());
     }
 
-//    @Test
-//    public void deleteBuddy() throws Exception {
-//        AddressBook a1 = new AddressBook();
-//        a1.setId(1);
-//        BuddyInfo b1 = new BuddyInfo(1, "Shashaank","613415");
-//        repo.save(a1);
-//        String body = asJsonString(b1);
-//        this.mockMvc.perform(post("/delbud?addressId=1&buddyId=1")
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andDo(print()).andExpect(status().isOk());
-//    }
+    @Test
+    public void deleteBuddy() throws Exception {
+        AddressBook a1 = new AddressBook();
+        a1.setId(1);
+        BuddyInfo b1 = new BuddyInfo(1, "Shashaank","613415");
+        repo.save(a1);
+        buddyRepo.save(b1);
+        String body = asJsonString(b1);
+        this.mockMvc.perform(delete("/delbud?addressId=1&buddyId=1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isOk());
+    }
 }

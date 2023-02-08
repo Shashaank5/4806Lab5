@@ -27,7 +27,7 @@ public class AddressController {
     @GetMapping("/getoneadd")
     public String getAddress(@RequestParam Integer id,  Model model){
         Optional<AddressBook> a1 = addressRepo.findById(id);
-        if (a1.isEmpty()) return null;
+        if (a1.isEmpty()) return "error";
         model.addAttribute("BuddyList", a1.get().getBuddyList());
         return "addresses";
     }
@@ -57,13 +57,13 @@ public class AddressController {
         return "index";
     }
 
-    @PostMapping("/delbud")
+    @DeleteMapping("/delbud")
     public String removeBuddy(@RequestParam Integer addressId, @RequestParam Integer buddyId){
         Optional<AddressBook> a1 = addressRepo.findById(addressId);
-        if(a1.isEmpty()) return null;
+        if(a1.isEmpty()) return "error";
         AddressBook a = a1.get();
         Optional<BuddyInfo> b = buddyRepo.findById(buddyId);
-        if(b.isEmpty()) return null;
+        if(b.isEmpty()) return "error";
         a.removeInfo(b.get());
         addressRepo.save(a);
         return "index";
