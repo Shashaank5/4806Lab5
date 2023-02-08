@@ -17,6 +17,12 @@ public class BuddyInfo {
         phone = budPhone;
     }
 
+    public BuddyInfo(Integer budId, String budName, String budPhone){
+        id = budId;
+        name = budName;
+        phone = budPhone;
+    }
+
     public BuddyInfo() {
     }
 

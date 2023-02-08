@@ -48,16 +48,16 @@ public class AddressController {
     }
 
     @PostMapping("/addbud")
-    public String addBuddy(@RequestParam Integer id, @RequestParam String name, @RequestParam String phone, Model model){
-        Optional<AddressBook> a = addressRepo.findById(id);
+    public String addBuddy(@RequestBody BuddyInfo buddyInfo, Model model){
+        Optional<AddressBook> a = addressRepo.findById(buddyInfo.getId());
         if(a.isEmpty()) return null;
         AddressBook a1 = a.get();
-        a1.addInfo(new BuddyInfo(name, phone));
+        a1.addInfo(buddyInfo);
         addressRepo.save(a1);
         return "index";
     }
 
-    @DeleteMapping("/delbud")
+    @PostMapping("/delbud")
     public String removeBuddy(@RequestParam Integer addressId, @RequestParam Integer buddyId){
         Optional<AddressBook> a1 = addressRepo.findById(addressId);
         if(a1.isEmpty()) return null;
