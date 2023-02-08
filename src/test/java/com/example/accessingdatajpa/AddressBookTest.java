@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
+
 @SpringBootTest
 public class AddressBookTest {
 
@@ -15,7 +16,7 @@ public class AddressBookTest {
         AddressBook a1 = new AddressBook();
         a1.addInfo(new BuddyInfo("Shawshank", "613"));
         a1.addInfo(new BuddyInfo("bobby", "not a number hehe"));
-        assertEquals("AddressBook{buddyList=[BuddyInfo{name='Shawshank', phone='613'}, BuddyInfo{name='bobby', phone='not a number hehe'}]}", a1.toString());
+        assertEquals("AddressBook{id=null, buddyList=[BuddyInfo{id=null, name='Shawshank', phone='613'}, BuddyInfo{id=null, name='bobby', phone='not a number hehe'}]}", a1.toString());
     }
 
     @Test
@@ -24,7 +25,7 @@ public class AddressBookTest {
         a1.addInfo(new BuddyInfo("bob", "613-737-1111"));
         a1.addInfo(new BuddyInfo("Johnyy", "+1(91)123-4567"));
         System.out.println(a1);
-        assertEquals("AddressBook{buddyList=[BuddyInfo{name='bob', phone='613-737-1111'}, BuddyInfo{name='Johnyy', phone='+1(91)123-4567'}]}", a1.toString());
+        assertEquals("AddressBook{id=null, buddyList=[BuddyInfo{id=null, name='bob', phone='613-737-1111'}, BuddyInfo{id=null, name='Johnyy', phone='+1(91)123-4567'}]}", a1.toString());
     }
 
     @Test
@@ -52,7 +53,7 @@ public class AddressBookTest {
         a1.addInfo(b3);
         assertEquals(b1, a1.getBuddyList());
         a1.removeInfo(b2);
-        assertEquals("AddressBook{buddyList=[BuddyInfo{name='Johnyy', phone='+1(91)123-4567'}]}", a1.toString());
+        assertEquals("AddressBook{id=null, buddyList=[BuddyInfo{id=null, name='Johnyy', phone='+1(91)123-4567'}]}", a1.toString());
     }
 
     @Test

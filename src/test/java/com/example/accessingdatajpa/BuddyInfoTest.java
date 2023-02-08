@@ -17,7 +17,7 @@ public class BuddyInfoTest {
     public void TestBuddy(){
         BuddyInfo b1 = new BuddyInfo("Bobby", "6136136136");
         System.out.println(b1);
-        assertEquals("BuddyInfo{name='Bobby', phone='6136136136'}", b1.toString());
+        assertEquals("BuddyInfo{id=null, name='Bobby', phone='6136136136'}", b1.toString());
     }
 
     @Test
